@@ -24,9 +24,16 @@ extern int sym[];
 "%"	return MODULO;
 "<"	return LESSER;
 ">"	return GREATER;
+"<="	return LTEQ;
+">="	return GTEQ;
+"=="	return EQ;
+"!="	return NEQ;
 "("	return BRACEL;
 ")"	return BRACER;
 "^"	return POW;
+"min"	return MIN;
+"max"	return MAX;
+","	return SEP;
 
 "\n"    return NEWLINE;
 
