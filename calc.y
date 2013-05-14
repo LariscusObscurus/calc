@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#define MAX_PARMS 20
 int sym[26];
-int arr[10] = {0};
+int arr[MAX_PARMS] = {0};
 int count = 0;
 
 /*int min(int a, int b);
@@ -14,7 +15,7 @@ void append(int a);
 %}
 
 %token VARIABLE ASSIGN INTEGER NEWLINE BRACEL BRACER SEP
-%left GREATER LESSER EQ NEQ GTEQ LTEQ
+%left GREATER LESSER EQ NEQ GTEQ LTEQ COND OPT
 %left MINUS PLUS
 %left TIMES DIVISION
 %left POW MIN MAX
@@ -47,19 +48,28 @@ expr: INTEGER			{ $$ = $1; }
 	| expr POW expr		{ $$ = pow($1, $3);} 
 	| MIN BRACEL listloop BRACER
 				{ $$ = min();
-				memset(arr, 0, 10*sizeof(int));
+				memset(arr, 0, MAX_PARMS*sizeof(int));
 				count = 0;
 				}
 	| MAX BRACEL listloop BRACER
 				{ $$ = max();
-				memset(arr, 0, 10*sizeof(int));
+				memset(arr, 0, MAX_PARMS*sizeof(int));
 				count = 0;
+				}
+	| expr COND expr OPT expr
+				{ 
+					if($1 != 0) {
+						$$ = $3;
+					} else {
+						$$ = $5;
+					}
 				}
 	;
 
 listloop: expr			{append($1);}
 	| listloop SEP expr	{append($3);}
 	;
+
 
 %%
 

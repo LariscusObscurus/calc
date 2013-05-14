@@ -16,6 +16,11 @@ extern int sym[];
 	return INTEGER;
 }
 
+0x[A-Fa-f0-9]+ {
+	yylval = (int) strtol(yytext, NULL, 0);
+	return INTEGER;
+}
+
 ":="    return ASSIGN;
 "+"     return PLUS;
 "-"	return MINUS;
@@ -34,6 +39,8 @@ extern int sym[];
 "min"	return MIN;
 "max"	return MAX;
 ","	return SEP;
+"?"	return COND;
+":"	return OPT;
 
 "\n"    return NEWLINE;
 
